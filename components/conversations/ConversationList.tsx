@@ -4,16 +4,29 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search } from "lucide-react";
+import { Search, MessageCircle } from "lucide-react";
+import { Instagram, Facebook, Twitter, Linkedin, TikTok, Reddit } from "@/components/icons/brand-icons";
 import { ConversationItem } from "./ConversationItem";
 import type { Conversation } from "./ConversationItem";
+import type { ComponentType } from "react";
 
-const PLATFORM_FILTERS = [
-  { label: "All", value: "all", color: "#1A2B3E" },
-  { label: "IG", value: "instagram", color: "#E1306C" },
-  { label: "FB", value: "facebook", color: "#1877F2" },
-  { label: "WA", value: "whatsapp", color: "#25D366" },
-] as const;
+interface PlatformFilter {
+  label: string;
+  value: string;
+  color: string;
+  icon: ComponentType<{ className?: string }> | null;
+}
+
+const PLATFORM_FILTERS: PlatformFilter[] = [
+  { label: "All",       value: "all",       color: "#1A2B3E", icon: null },
+  { label: "Instagram", value: "instagram", color: "#E1306C", icon: Instagram },
+  { label: "Facebook",  value: "facebook",  color: "#1877F2", icon: Facebook },
+  { label: "WhatsApp",  value: "whatsapp",  color: "#25D366", icon: MessageCircle },
+  { label: "Twitter",   value: "twitter",   color: "#000000", icon: Twitter },
+  { label: "LinkedIn",  value: "linkedin",  color: "#0A66C2", icon: Linkedin },
+  { label: "TikTok",    value: "tiktok",    color: "#010101", icon: TikTok },
+  { label: "Reddit",    value: "reddit",    color: "#FF4500", icon: Reddit },
+];
 
 interface ConversationListProps {
   conversations: Conversation[];
@@ -61,26 +74,31 @@ export function ConversationList({
         </div>
 
         {/* Platform filters */}
-        <div className="flex gap-1.5">
-          {PLATFORM_FILTERS.map((filter) => (
-            <button
-              key={filter.value}
-              onClick={() => setPlatformFilter(filter.value)}
-              className={cn(
-                "rounded-full px-3 py-1 text-[11px] font-semibold transition-colors",
-                platformFilter === filter.value
-                  ? "text-white"
-                  : "bg-muted text-muted-foreground hover:text-foreground"
-              )}
-              style={
-                platformFilter === filter.value
-                  ? { backgroundColor: filter.color }
-                  : undefined
-              }
-            >
-              {filter.label}
-            </button>
-          ))}
+        <div className="flex flex-wrap gap-1.5">
+          {PLATFORM_FILTERS.map((filter) => {
+            const Icon = filter.icon;
+            return (
+              <button
+                key={filter.value}
+                title={filter.label}
+                onClick={() => setPlatformFilter(filter.value)}
+                className={cn(
+                  "flex items-center justify-center rounded-full transition-colors",
+                  Icon ? "size-7" : "px-3 py-1 text-[11px] font-semibold",
+                  platformFilter === filter.value
+                    ? "text-white"
+                    : "bg-muted text-muted-foreground hover:text-foreground"
+                )}
+                style={
+                  platformFilter === filter.value
+                    ? { backgroundColor: filter.color }
+                    : undefined
+                }
+              >
+                {Icon ? <Icon className="size-3.5" /> : filter.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 

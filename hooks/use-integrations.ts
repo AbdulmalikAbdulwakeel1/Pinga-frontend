@@ -3,7 +3,7 @@ import { api } from "@/lib/api-client";
 import { toast } from "sonner";
 
 export interface PlatformIntegration {
-  platform: "instagram" | "facebook" | "whatsapp";
+  platform: "instagram" | "facebook" | "whatsapp" | "twitter" | "linkedin" | "tiktok" | "reddit";
   connected: boolean;
   accountName?: string;
   accountId?: string;
@@ -73,5 +73,57 @@ export function useConnectWhatsApp() {
       toast.success("WhatsApp connected successfully!");
     },
     onError: (err: any) => toast.error(err.message || "Failed to connect WhatsApp"),
+  });
+}
+
+export function useConnectTwitter() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: { code: string; redirectUri: string; codeVerifier: string }) =>
+      api.post("/integrations/twitter/connect", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["integrations"] });
+      toast.success("Twitter/X connected!");
+    },
+    onError: (err: any) => toast.error(err.message || "Failed to connect Twitter"),
+  });
+}
+
+export function useConnectLinkedIn() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: { code: string; redirectUri: string }) =>
+      api.post("/integrations/linkedin/connect", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["integrations"] });
+      toast.success("LinkedIn connected!");
+    },
+    onError: (err: any) => toast.error(err.message || "Failed to connect LinkedIn"),
+  });
+}
+
+export function useConnectTikTok() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: { code: string; redirectUri: string; codeVerifier: string }) =>
+      api.post("/integrations/tiktok/connect", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["integrations"] });
+      toast.success("TikTok connected!");
+    },
+    onError: (err: any) => toast.error(err.message || "Failed to connect TikTok"),
+  });
+}
+
+export function useConnectReddit() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: { code: string; redirectUri: string }) =>
+      api.post("/integrations/reddit/connect", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["integrations"] });
+      toast.success("Reddit connected!");
+    },
+    onError: (err: any) => toast.error(err.message || "Failed to connect Reddit"),
   });
 }

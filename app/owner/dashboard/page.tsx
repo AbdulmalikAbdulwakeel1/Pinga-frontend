@@ -31,7 +31,7 @@ import {
   Zap,
   Package,
 } from "lucide-react";
-import { Instagram, Facebook } from "@/components/icons/brand-icons";
+import { Instagram, Facebook, Twitter, Linkedin, TikTok, Reddit } from "@/components/icons/brand-icons";
 import { cn, formatCurrency, timeAgo } from "@/lib/utils";
 import { ROUTES } from "@/lib/routes";
 import {
@@ -86,6 +86,10 @@ function PlatformDot({ platform }: { platform: string }) {
     instagram: "bg-pink-500",
     facebook: "bg-blue-500",
     whatsapp: "bg-green-500",
+    twitter: "bg-black",
+    linkedin: "bg-blue-600",
+    tiktok: "bg-gray-900",
+    reddit: "bg-orange-500",
   };
   return (
     <span className={cn("inline-block size-2 rounded-full", colors[platform] ?? "bg-gray-400")} />
@@ -127,9 +131,13 @@ const fadeUp = {
 };
 
 const PLATFORM_META = [
-  { key: "instagram", name: "Instagram", icon: Instagram, color: "#E1306C", bg: "bg-pink-500/10" },
-  { key: "facebook",  name: "Facebook",  icon: Facebook,   color: "#1877F2", bg: "bg-blue-500/10" },
+  { key: "instagram", name: "Instagram", icon: Instagram,     color: "#E1306C", bg: "bg-pink-500/10" },
+  { key: "facebook",  name: "Facebook",  icon: Facebook,      color: "#1877F2", bg: "bg-blue-500/10" },
   { key: "whatsapp",  name: "WhatsApp",  icon: MessageCircle, color: "#25D366", bg: "bg-green-500/10" },
+  { key: "twitter",   name: "Twitter/X", icon: Twitter,       color: "#000000", bg: "bg-black/10 dark:bg-white/10" },
+  { key: "linkedin",  name: "LinkedIn",  icon: Linkedin,      color: "#0A66C2", bg: "bg-blue-600/10" },
+  { key: "tiktok",    name: "TikTok",    icon: TikTok,        color: "#010101", bg: "bg-gray-900/10 dark:bg-white/5" },
+  { key: "reddit",    name: "Reddit",    icon: Reddit,         color: "#FF4500", bg: "bg-orange-500/10" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -179,13 +187,13 @@ export default function DashboardPage() {
   // Recent conversations
   const recentConversations: Array<{
     id: string; name: string; avatar: string;
-    platform: "instagram" | "whatsapp" | "facebook";
+    platform: string;
     message: string; time: string; unread: boolean;
   }> = (stats?.recentConversations ?? []).map((c: any) => ({
     id: String(c.id),
     name: String(c.contactName ?? "Unknown"),
     avatar: String(c.contactAvatar ?? ""),
-    platform: c.platform as "instagram" | "whatsapp" | "facebook",
+    platform: String(c.platform ?? ""),
     message: String(c.lastMessage ?? ""),
     time: String(c.lastMessageAt ?? new Date().toISOString()),
     unread: (c.unreadCount ?? 0) > 0,

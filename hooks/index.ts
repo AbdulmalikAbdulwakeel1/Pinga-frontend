@@ -8,3 +8,4 @@ export * from "./use-ai-agent";
 export * from "./use-notifications";
 export * from "./use-socket";
 export * from "./use-integrations";
+export * from "./use-keyword-monitors";

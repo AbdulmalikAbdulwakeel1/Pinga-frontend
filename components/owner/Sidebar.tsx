@@ -15,6 +15,7 @@ import {
   Users,
   ShoppingCart,
   Wifi,
+  Bell,
   Bot,
   Beaker,
   Megaphone,
@@ -67,6 +68,7 @@ const navGroups: NavGroup[] = [
       { label: "Leads", href: ROUTES.LEADS, icon: Users },
       { label: "Orders", href: ROUTES.ORDERS, icon: ShoppingCart },
       { label: "Connect Apps", href: ROUTES.INTEGRATIONS, icon: Wifi },
+      { label: "Mentions", href: ROUTES.MENTIONS, icon: Bell },
     ],
   },
   {

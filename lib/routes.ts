@@ -41,6 +41,7 @@ export const ROUTES = {
   ANALYTICS_CONVERSATIONS: "/owner/analytics/conversations",
   ANALYTICS_PRODUCTS: "/owner/analytics/products",
   INTEGRATIONS: "/owner/integrations",
+  MENTIONS: "/owner/mentions",
   TEAM: "/owner/team",
   SETTINGS: "/owner/settings",
   BROADCASTS: "/owner/broadcasts",
